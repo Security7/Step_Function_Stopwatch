@@ -12,18 +12,29 @@ exports.handler = async (event) => {
     let execution_date = event.execution_date;
     
     //
-    //  3.  We get the actual time and subtract almost a year from it. This way
-    //      we can use this time against the Execution Time.
+    //  2.  Get the actual date
     //
-	let a_year_from_now = moment().add(360, 'days');
+	let now = moment();
 	
 	//
-	//  4.  Compare the Execution Time with the time in the future
+	//  3.  Convert the execution date in to a Moment object
 	//
-	let result = moment(a_year_from_now).isBefore(execution_date);
-	
+    let past = moment(execution_date);
+    
+    //
+    //  4.  Add to the execution time almost a year 
+    //
+    let future = past.add(360, 'days');
+    
+    //  
+    //  5.  Check to see if the future date based on the executin time 
+    //      is still ahead of Now. If Now becomes bigger, then we know one year
+    ///     passed.
+    //
+    let result = moment(future).isBefore(now);
+
 	//
-	//  5.  Check if we are exciding our time limit of a year
+	//  6.  Check if we are exciding our time limit of a year
 	//
 	if(result)
 	{
