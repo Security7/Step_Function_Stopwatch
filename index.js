@@ -33,8 +33,14 @@ exports.handler = async (event) => {
     //
     let result = moment(future).isBefore(now);
 
+    //
+    //  6.  By default we asume that we did not reach the year limit of
+    //      a Step Functions
+    //
+    event.year_limit = false;
+    
 	//
-	//  6.  Check if we are exciding our time limit of a year
+	//  7.  Check if we are exciding our time limit of a year
 	//
 	if(result)
 	{
