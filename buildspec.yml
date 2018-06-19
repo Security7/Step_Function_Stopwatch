@@ -20,8 +20,8 @@ phases:
         else
           npm run build;
         fi
+      - echo Build completed on `date`.
   post_build:
     commands:
       - echo Entered the post_build phase...
       - echo Nothing to do.
-      - echo Build completed on `date`.
