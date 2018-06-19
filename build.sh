@@ -56,16 +56,15 @@ echo "";
 for ((i=0; i < ${#REGIONS[@]}; i++));
 do
     #
-    #   <>> UI information.
-    #
-    echo "Checking if $BUCKET exists.";
-    
-    #
     #   Create the bucket name based on the region.
     #
     BUCKET=net.security7.code."${REGIONS[$i]}";
-
     
+    #
+    #   <>> UI information.
+    #
+    echo "Checking if $BUCKET exists.";
+
     #
     #   Check if the bucket dose not exists.
     #
