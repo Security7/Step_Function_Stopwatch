@@ -15,7 +15,7 @@ phases:
     commands:
       - echo Entered the build phase on `date`...
       - echo Building the site.
-      if $PULL_REQUEST; then
+      - if $PULL_REQUEST; then
           echo Repo not deployed becasue this is a Pull Request.;
         else
           npm run build;
