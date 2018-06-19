@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/Security7/Step_Function_Stopwatch#readme",
   "dependencies": {
-    "moment": "^2.22.2"
+    "moment": "2.22.2"
   }
 }
