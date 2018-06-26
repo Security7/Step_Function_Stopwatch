@@ -49,6 +49,10 @@ BUCKET_ANTI_COLISION_NAME="";
 #
 if [ $STAGE != "production" ]; then
 
+    #
+    #   Add the dot as section seapration here so it is easier to manage 
+    #   when we have the empty string.
+    #
     BUCKET_ANTI_COLISION_NAME=.$STAGE;
     
 fi
@@ -198,7 +202,7 @@ for ((i=0; i < ${#REGIONS[@]}; i++)); do
     #   Set the object to be publicly readeble and only that so people can 
     #   dowload it but can't change it.
     #
-    aws s3api put-object-acl --key $ARCHIVE_NAME.zip --acl public-read --bucket net.security7.code.${REGIONS[$i]}
+    aws s3api put-object-acl --key $ARCHIVE_NAME.zip --acl public-read --bucket $BUCKET
     
 done
 
