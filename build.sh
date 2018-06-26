@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo $stage;
-
 #     _____  ______  _______  _______  _____  _   _   _____   _____
 #    / ____||  ____||__   __||__   __||_   _|| \ | | / ____| / ____|
 #   | (___  | |__      | |      | |     | |  |  \| || |  __ | (___
@@ -37,6 +35,29 @@ REGIONS=(
     sa-east-1
 );
 
+#
+#   This variable is used to extend the name of the bucket that holds the zipped
+#   source code so it dose not colid with the production buckets. Since
+#   S3 have global names.
+#
+BUCKET_ANTI_COLISION_NAME="";
+
+#
+#   If the stage is anything but production, we use the stage value for the
+#   custom name of the bucket. This way if you want to deploy this 
+#   on another account, you can set your own name.
+#
+if [ $STAGE != "production" ]; then
+
+    BUCKET_ANTI_COLISION_NAME=.$STAGE;
+    
+fi
+
+#
+#   Create the base name of the bucket that is then used across the script
+#
+BUCKET_BASE_NAME=net.security7.code$BUCKET_ANTI_COLISION_NAME;
+
 #    __  __              _____   _   _
 #   |  \/  |     /\     |_   _| | \ | |
 #   | \  / |    /  \      | |   |  \| |
@@ -55,12 +76,12 @@ echo "";
 #   Loop over the AWS Region array and check if we have to create a bucket
 #   in a region that dosn't have our code.
 #
-for ((i=0; i < ${#REGIONS[@]}; i++));
-do
+for ((i=0; i < ${#REGIONS[@]}; i++)); do
+
     #
     #   Create the bucket name based on the region.
     #
-    BUCKET=net.security7.code."${REGIONS[$i]}";
+    BUCKET=$BUCKET_BASE_NAME."${REGIONS[$i]}";
     
     #
     #   <>> UI information.
@@ -89,6 +110,7 @@ do
         aws s3api put-bucket-acl --acl public-read --bucket $BUCKET
         
     fi
+    
 done
 
 #
@@ -160,13 +182,12 @@ echo "";
 #   Loop again aver all the regions and upload the source code in all the 
 #   regions that we support.
 #
-for ((i=0; i < ${#REGIONS[@]}; i++));
-do
+for ((i=0; i < ${#REGIONS[@]}; i++)); do
 
     #
     #   Create the bucket name based on the region.
     #
-    BUCKET=net.security7.code."${REGIONS[$i]}";
+    BUCKET=$BUCKET_BASE_NAME."${REGIONS[$i]}";
     
     #
     #   Upload the ZIP file.
