@@ -1,6 +1,6 @@
 # Step Function Stopwatch
 
-This repository is used in conjunction with a step function to monitor how much time elapsed, since a Step Function can work only for one year.
+This repository is used in conjunction with a Step Function to monitor how much time elapsed, since a Step Function can work only for one year.
 
 # More about us
 
